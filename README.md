@@ -10,7 +10,6 @@ docker run --name Mongo2ES_TestEnv -d \
   -e ROOT_URL=http://localhost:3001 \
   -e MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" \
   -e MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local \
-  -e METEOR_SETTINGS="$(cat settings.json)" \
   -e elasticsearchHost="127.0.0.1:9200" \
   -p 3001:80 \
   kuknito/mongo2es
