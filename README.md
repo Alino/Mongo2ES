@@ -1,11 +1,8 @@
-Mongo2ES copies data from mongodb to elasticsearch.
+Mongo2ES syncs data from mongodb to elasticsearch.
 
-
-to add your watchers, modify watchers.coffee file
-
-example usage:
-------------
-```
+how to install as a docker container example:
+```shell
+docker build -t kuknito/mongo2es .
 docker run --name Mongo2ES_TestEnv -d \
   -e ROOT_URL=http://localhost:3001 \
   -e MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" \
@@ -16,9 +13,15 @@ docker run --name Mongo2ES_TestEnv -d \
   kuknito/mongo2es
 ```
 
+If you want to watch collections, you have to write your watchers.
 
+To add your watchers, modify file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
+or create/rename the file to ```watchers.coffee```
+(all coffee files in this directory are automatically executed when mongo2es is running)
 
-watching collection:
+example collection watchers:
+------------
+watching collection and start copying mongodb data to ES from the moment mongo2es runs :
 ```
 new Mongo2ES({
     collectionName: 'manufacturers'
