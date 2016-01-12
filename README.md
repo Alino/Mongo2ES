@@ -1,6 +1,9 @@
+about:
+------------
 Mongo2ES syncs data from mongodb to elasticsearch.
 
 how to install as a docker container example:
+------------
 ```shell
 docker build -t kuknito/mongo2es .
 docker run --name Mongo2ES_TestEnv -d \
@@ -13,6 +16,9 @@ docker run --name Mongo2ES_TestEnv -d \
   kuknito/mongo2es
 ```
 
+------------
+watching collections (tailing mongodb oplog and moving all data to ES)
+------------
 If you want to watch collections, you have to write your watchers.
 
 To add your watchers, modify file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
