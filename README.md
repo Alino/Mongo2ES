@@ -5,6 +5,7 @@ Mongo2ES syncs data from mongodb to elasticsearch.
 how to install as a docker container example:
 ------------
 ```shell
+git clone https://github.com/Alino/Mongo2ES.git && cd Mongo2ES
 docker build -t kuknito/mongo2es .
 docker run --name Mongo2ES_TestEnv -d \
   -e ROOT_URL=http://localhost:3001 \
