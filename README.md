@@ -1,6 +1,6 @@
 # Mongo2ES:
 
-- Mongo2ES syncs data from mongodb to elasticsearch.
+- Mongo2ES syncs data from MongoDB to ElasticSearch.
 - Mongo2ES is built with MeteorJs.
 
 ## Installation
@@ -32,7 +32,7 @@ docker run --name Mongo2ES -d \
 If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
 For that, you have to write your watchers.
 
-You can get inspired from this example file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
+You can get inspired from this example file [```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/packages/kuknito-mongo2es-watchers/watchersExample.coffee)
 If you are ready to write your own watchers go and create new file ```watchers.coffee``` in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
 (all coffee files in this directory are automatically run when Mongo2ES starts up.)
 
