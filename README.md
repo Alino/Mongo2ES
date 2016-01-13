@@ -17,9 +17,9 @@ curl https://install.meteor.com/ | sh
 ```
 then clone and run it
 ```shell
-$ git clone https://github.com/Alino/Mongo2ES.git
-$ cd Mongo2ES
-$ meteor --port 3001
+git clone https://github.com/Alino/Mongo2ES.git
+cd Mongo2ES
+elasticsearchHost="127.0.0.1:9200" meteor --port 3001
 ```
 ### install as docker container:
 ```shell
