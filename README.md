@@ -1,7 +1,9 @@
 # Mongo2ES:
 
 - Mongo2ES syncs data from MongoDB to ElasticSearch.
+- Also automtically removes documents from ElasticSearch if they are removed in MongoDB
 - Mongo2ES is built with MeteorJs.
+
 
 Why does this exist?
 - ElasticSearch rivers are deprecated
