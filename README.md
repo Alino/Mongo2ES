@@ -31,10 +31,13 @@ docker run --name Mongo2ES -d \
 ```
 
 ## environment variables
+
+
+
 env variable          | description
 ----------------------|---------------------
 **MONGO_URL**         | MongoDB url
-**MONGO_OPLOG_URL**   | [MongoDB oplog](https://docs.mongodb.org/manual/core/replica-set-oplog/) url
+**MONGO_OPLOG_URL**   | <a href="https://docs.mongodb.org/manual/core/replica-set-oplog/" target="_blank">MongoDB oplog</a> url
 **elasticsearchHost** | URL which defines your ES host. (including port)
 logitHost             | URL of your logstash host if you have any.
 logitPort             | URL of your logstash port if you have any.
@@ -43,7 +46,7 @@ logitPort             | URL of your logstash port if you have any.
 ## logging
 there are currently 2 options for logging in Mongo2ES.
 
-1. **Default behavior** - simply shows up the logs like console.log()
+1. **Default behavior** - simply shows up the logs, like ```console.log()``` does
 2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
 
 Both logging options are using Meteor package ```alino-logit``` 
