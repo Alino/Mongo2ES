@@ -1,9 +1,21 @@
-about:
-------------
-Mongo2ES syncs data from mongodb to elasticsearch.
+# Mongo2ES:
 
-example how to install as a docker container:
-------------
+- Mongo2ES syncs data from mongodb to elasticsearch.
+- Mongo2ES is built with MeteorJs.
+
+## Installation
+### install without docker
+Mongo2ES runs as a Meteor application, so you need to have Meteor installed, first.
+```shell
+curl https://install.meteor.com/ | sh
+```
+then clone and run it
+```shell
+$ git clone https://github.com/Alino/Mongo2ES.git
+$ cd Mongo2ES
+$ meteor --port 3001
+```
+### install as docker container:
 ```shell
 git clone https://github.com/Alino/Mongo2ES.git && cd Mongo2ES
 docker build -t kuknito/mongo2es .
@@ -16,55 +28,15 @@ docker run --name Mongo2ES -d \
   kuknito/mongo2es
 ```
 
-------------
-watching collections (tailing mongodb oplog and moving all data to ES)
-------------
-If you want to watch collections, you have to write your watchers.
+## Syncing data from MongoDB to ElasticSearch
+If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
+For that, you have to write your watchers.
 
-To add your watchers, modify file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
-or create/rename the file to ```watchers.coffee```
-(all coffee files in this directory are automatically executed when mongo2es is running)
+You can get inspired from this example file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
+If you are ready to write your own watchers go and create new file ```watchers.coffee``` in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
+(all coffee files in this directory are automatically run when Mongo2ES starts up.)
 
-example collection watchers:
-------------
-watching collection and start copying mongodb data to ES from the moment mongo2es runs :
-```
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  })
-```
 
-watching collection and copy all already existing data:
-```
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  }, undefined, true)
-```
 
-watching collection and using transformation (transforming data before sending it to ElasticSearch):
-```
-transform = function(doc) {
-  doc.fullName = doc.firstName + " " + doc.lastName;
-  return doc;
-};
-
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  }, transform)
-```
-
-limitations:
--------------
+## limitations:
 - only one mongo database can be synced to ES
