@@ -41,7 +41,7 @@ env variable          | description
 **MONGO_OPLOG_URL**   | <a href="https://docs.mongodb.org/manual/core/replica-set-oplog/" target="_blank">MongoDB oplog</a> url
 **elasticsearchHost** | URL which defines your ES host. (including port)
 logitHost             | URL of your logstash host (optional)
-logitPort             | URL of your logstash port (optional)
+logitPort             | logstash port (optional)
 
 
 ## Syncing data from MongoDB to ElasticSearch
