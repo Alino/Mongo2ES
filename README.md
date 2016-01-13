@@ -3,7 +3,9 @@
 - Mongo2ES syncs data from MongoDB to ElasticSearch.
 - Mongo2ES is built with MeteorJs.
 
-
+Why does this exist?
+- ElasticSearch rivers are deprecated
+- [Transporter by compose](https://github.com/compose/transporter) is kind of stuck and unable to remove ES documents when they are removed in MongoDB.
 
 ## Installation
 ### install without docker
@@ -31,9 +33,6 @@ docker run --name Mongo2ES -d \
 ```
 
 ## environment variables
-
-
-
 env variable          | description
 ----------------------|---------------------
 **MONGO_URL**         | MongoDB url
@@ -43,6 +42,18 @@ logitHost             | URL of your logstash host if you have any.
 logitPort             | URL of your logstash port if you have any.
 
 
+## Syncing data from MongoDB to ElasticSearch
+If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
+For that, you have to write your watchers.
+
+You can get inspired from this example file
+[```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/packages/kuknito-mongo2es-watchers/watchersExample.coffee)
+
+If you are ready to write your own watchers,
+go and create new file ```watchers.coffee```
+in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
+(all coffee files in this directory are automatically run when Mongo2ES starts up.)
+
 ## logging
 there are currently 2 options for logging in Mongo2ES.
 
@@ -50,16 +61,6 @@ there are currently 2 options for logging in Mongo2ES.
 2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
 
 Both logging options are using Meteor package ```alino-logit``` 
-
-## Syncing data from MongoDB to ElasticSearch
-If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
-For that, you have to write your watchers.
-
-You can get inspired from this example file [```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/packages/kuknito-mongo2es-watchers/watchersExample.coffee)
-If you are ready to write your own watchers go and create new file ```watchers.coffee``` in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
-(all coffee files in this directory are automatically run when Mongo2ES starts up.)
-
-
 
 ## limitations:
 - only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
