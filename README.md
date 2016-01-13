@@ -3,6 +3,8 @@
 - Mongo2ES syncs data from MongoDB to ElasticSearch.
 - Mongo2ES is built with MeteorJs.
 
+
+
 ## Installation
 ### install without docker
 Mongo2ES runs as a Meteor application, so you need to have Meteor installed, first.
@@ -28,6 +30,24 @@ docker run --name Mongo2ES -d \
   kuknito/mongo2es
 ```
 
+## environment variables
+env variable          | description
+----------------------|---------------------
+**MONGO_URL**         | MongoDB url
+**MONGO_OPLOG_URL**   | [MongoDB oplog](https://docs.mongodb.org/manual/core/replica-set-oplog/) url
+**elasticsearchHost** | URL which defines your ES host. (including port)
+logitHost             | URL of your logstash host if you have any.
+logitPort             | URL of your logstash port if you have any.
+
+
+## logging
+there are currently 2 options for logging in Mongo2ES.
+
+1. **Default behavior** - simply shows up the logs like console.log()
+2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
+
+Both logging options are using Meteor package ```alino-logit``` 
+
 ## Syncing data from MongoDB to ElasticSearch
 If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
 For that, you have to write your watchers.
@@ -39,4 +59,4 @@ If you are ready to write your own watchers go and create new file ```watchers.c
 
 
 ## limitations:
-- only one mongo database can be synced to ES
+- only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
