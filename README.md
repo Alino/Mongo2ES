@@ -1,70 +1,68 @@
-about:
-------------
-Mongo2ES syncs data from mongodb to elasticsearch.
+# Mongo2ES:
 
-how to install as a docker container example:
-------------
+- Mongo2ES syncs data from MongoDB to ElasticSearch.
+- Also automatically removes documents from ElasticSearch if they are removed in MongoDB
+- Mongo2ES is built with MeteorJs.
+
+
+Why does this exist?
+- ElasticSearch rivers are deprecated
+- [Transporter by compose](https://github.com/compose/transporter) is kind of stuck and unable to remove ES documents when they are removed in MongoDB.
+
+## Installation
+### install without docker
+Mongo2ES runs as a Meteor application, so you need to have Meteor installed, first.
 ```shell
+curl https://install.meteor.com/ | sh
+```
+then clone and run it
+```shell
+git clone https://github.com/Alino/Mongo2ES.git
+cd Mongo2ES
+elasticsearchHost="127.0.0.1:9200" meteor --port 3001
+```
+### install as docker container:
+```shell
+git clone https://github.com/Alino/Mongo2ES.git && cd Mongo2ES
 docker build -t kuknito/mongo2es .
-docker run --name Mongo2ES_TestEnv -d \
+docker run --name Mongo2ES -d \
   -e ROOT_URL=http://localhost:3001 \
   -e MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" \
   -e MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local \
-  -e METEOR_SETTINGS="$(cat settings.json)" \
   -e elasticsearchHost="127.0.0.1:9200" \
   -p 3001:80 \
   kuknito/mongo2es
 ```
 
-------------
-watching collections (tailing mongodb oplog and moving all data to ES)
-------------
-If you want to watch collections, you have to write your watchers.
+## environment variables
+env variable          | description
+----------------------|---------------------
+**MONGO_URL**         | MongoDB url
+**MONGO_OPLOG_URL**   | <a href="https://docs.mongodb.org/manual/core/replica-set-oplog/" target="_blank">MongoDB oplog</a> url
+**elasticsearchHost** | URL which defines your ES host. (including port)
+logitHost             | URL of your logstash host (optional)
+logitPort             | logstash port (optional)
 
-To add your watchers, modify file ```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```
-or create/rename the file to ```watchers.coffee```
-(all coffee files in this directory are automatically executed when mongo2es is running)
 
-example collection watchers:
-------------
-watching collection and start copying mongodb data to ES from the moment mongo2es runs :
-```
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  })
-```
+## Syncing data from MongoDB to ElasticSearch
+If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
+For that, you have to write your watchers.
 
-watching collection and copy all already existing data:
-```
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  }, undefined, true)
-```
+You can get inspired from this example file
+[```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/packages/kuknito-mongo2es-watchers/watchersExample.coffee)
 
-watching collection and using transformation (transforming data before sending it to ElasticSearch):
-```
-transform = function(doc) {
-  doc.fullName = doc.firstName + " " + doc.lastName;
-  return doc;
-};
+If you are ready to write your own watchers,
+go and create new file ```watchers.coffee```
+in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
+(all coffee files in this directory are automatically run when Mongo2ES starts up.)
 
-new Mongo2ES({
-    collectionName: 'manufacturers'
-    ES:
-      host: Meteor.settings.elasticsearchHost
-      index: 'manufacturers'
-      type: 'suggestions'
-  }, transform)
-```
+## logging
+there are currently 2 options for logging in Mongo2ES.
 
-limitations:
--------------
-- only one mongo database can be synced to ES
+1. **Default behavior** - simply shows up the logs, like ```console.log()``` does
+2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
+
+Both logging options are using Meteor package <a href="https://atmospherejs.com/alino/logit" target="_blank">```alino-logit```</a>
+
+## limitations:
+- only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
