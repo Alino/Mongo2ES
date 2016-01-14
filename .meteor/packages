@@ -20,5 +20,5 @@ autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
 kuknito:mongo2es
 coffeescript
-alino:logit
 kuknito:mongo2es-watchers
+alino:logit
