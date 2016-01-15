@@ -55,11 +55,34 @@ logitPort             | logstash port (optional)
 If you want to sync MongoDB to ElasticSearch, you must define which collections you want to watch.
 For that, you have to write your watchers.
 
-You can get inspired from this example file
-[```watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.coffee)
-
+### creating a watcher
 If you are ready to write your own watchers,
-go and create new file ```watchers.coffee``` in the project root.
+go and create new file ```watchers.js``` in the project root.
+Then you create a watcher by creating new object from Mongo2ES class:
+```javascript
+new Mongo2ES(options);
+```
+
+### options:
+```javascript
+options = {
+  collectionName: // String - name of the mongoDB collection you want to watch
+  ES: {
+    host: // String - url of your ElasticSearch host where you want to copy the data to.
+    index: // String - ElasticSearch index
+    type: // String - ElasticSearch type
+  },
+  transform: // Function - modify the document before copying it to ElasticSearch. Takes 1 argument - the document and should return the modified document.
+  copyAlreadyExistingData: // Boolean - true if  it should copy all existing data in this collection ( default: false )
+}
+```
+
+
+### examples of watchers
+You can get inspired from this example file
+[```watchersExample.js```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.js)
+
+
 
 ## logging
 there are currently 2 options for logging in Mongo2ES.
