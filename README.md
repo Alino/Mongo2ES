@@ -34,6 +34,13 @@ docker run --name Mongo2ES -d \
   kuknito/mongo2es
 ```
 
+### install as a Meteor package
+```
+meteor add alino:mongo2es
+```
+
+https://github.com/Alino/alino-mongo2es
+
 ## environment variables
 env variable          | description
 ----------------------|---------------------
