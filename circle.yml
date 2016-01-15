@@ -1,0 +1,72 @@
+machine:
+  node:
+    version: 0.12.2
+  java:
+    version: oraclejdk8
+
+  environment:
+    ELASTICSEARCH_HOST: "127.0.0.1"
+    ES_PORT: "9200"
+    LC_ALL: "C"
+
+  services:
+    - docker
+
+
+checkout:
+  post:
+    - git submodule init
+    - git submodule update
+
+dependencies:
+  cache_directories:
+    - "~/.meteor"
+    - "~/.npm"
+
+  override:
+    # BUILD DOCKER IMAGES
+    - docker info
+    # -------------------
+    # Mongo2ES ----------
+    - docker build -t kuknito/mongo2es .
+    # -------------------
+
+
+    # -- CACHE VELOCITY CLI --
+    - npm install velocity-cli -g
+
+test:
+  override:
+    # RUN DOCKER CONTAINERS
+    # MongoDB -------------
+    - docker run --name MongoDB -p 27018:27018 -d mongo:3.0 mongod --port 27018 --replSet "rs"
+    - sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:27018 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
+    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' MongoDB)" -- bash -c "mongo --port 27018 --eval \"rs.initiate()\""
+    # ---------------------
+    # ElasticSearch -------
+    - docker run --name ElasticSearch -d -p 9200:9200 -p 9300:9300 itzg/elasticsearch
+    - sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:9200 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
+    # ---------------------
+    # Mongo2ES ------------
+    - cd .docker/Mongo2ES && docker run --name Mongo2ES -d -e ROOT_URL=http://localhost:3001 -e MONGO_URL="mongodb://172.17.42.1:27018/kuknito?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" -e MONGO_OPLOG_URL=mongodb://172.17.42.1:27018/local -e elasticsearchHost=http://172.17.42.1:9200 -p 3001:80 kuknito/mongo2es
+    - sleep 30
+    - curl --retry 10 --retry-delay 5 -v http://localhost:3001 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
+    # ---------------------
+
+
+    # PACKAGE TESTING using velocity-cli
+    - velocity test-packages --port 3500 --ci:
+        environment:
+          VELOCITY_DEBUG: true
+          VELOCITY_CI: true
+
+    # create artifacts
+    - mkdir -p $CIRCLE_ARTIFACTS/chrome
+#    - cp .meteor/local/log/*.log $CIRCLE_ARTIFACTS/chrome
+
+    # save docker logs
+    - docker kill Mongo2ES && docker logs -f Mongo2ES > $CIRCLE_ARTIFACTS/mongo2es.log
+    - docker kill ElasticSearch && docker logs -f ElasticSearch > $CIRCLE_ARTIFACTS/elasticsearch.log
+    - docker kill MongoDB && docker logs -f MongoDB > $CIRCLE_ARTIFACTS/mongodb.log
