@@ -33,6 +33,11 @@ dependencies:
     - docker build -t kuknito/mongo2es .
     # -------------------
 
+    # -- CACHE METEOR --
+    # Restore the meteor symlink
+    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+    # Install Meteor if the cache didn't restore it
+    - if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
     # -- CACHE VELOCITY CLI --
     - npm install velocity-cli -g
@@ -69,9 +74,9 @@ test:
 #    - cp .meteor/local/log/*.log $CIRCLE_ARTIFACTS/chrome
 
     # save docker logs
-#    - docker kill Mongo2ES && docker logs -f Mongo2ES > $CIRCLE_ARTIFACTS/mongo2es.log
-#    - docker kill ElasticSearch && docker logs -f ElasticSearch > $CIRCLE_ARTIFACTS/elasticsearch.log
-#    - docker kill MongoDB && docker logs -f MongoDB > $CIRCLE_ARTIFACTS/mongodb.log
+    - docker kill Mongo2ES && docker logs -f Mongo2ES > $CIRCLE_ARTIFACTS/mongo2es.log
+    - docker kill ElasticSearch && docker logs -f ElasticSearch > $CIRCLE_ARTIFACTS/elasticsearch.log
+    - docker kill MongoDB && docker logs -f MongoDB > $CIRCLE_ARTIFACTS/mongodb.log
 
 
 deployment:
