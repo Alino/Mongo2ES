@@ -60,7 +60,11 @@ If you are ready to write your own watchers,
 go and create new file ```watchers.js``` in the project root.
 Then you create a watcher by creating new object from Mongo2ES class:
 ```javascript
-new Mongo2ES(options);
+if Meteor.isServer {
+  Meteor.startup(function () {
+    new Mongo2ES(options);
+  });
+}
 ```
 
 ### options:
@@ -80,7 +84,7 @@ options = {
 
 ### examples of watchers
 You can get inspired from this example file
-[```watchersExample.js```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.js)
+[```watchersExample```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample)
 
 
 
