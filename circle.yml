@@ -47,7 +47,7 @@ test:
     - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' MongoDB)" -- bash -c "mongo --port 27018 --eval \"rs.initiate()\""
     # ---------------------
     # ElasticSearch -------
-    - docker run --name ElasticSearch -d -p 9200:9200 -p 9300:9300 itzg/elasticsearch
+    - docker run --name ElasticSearch -d -p 9200:9200 -p 9300:9300 elasticsearch
     - sleep 2
     - curl --retry 10 --retry-delay 5 -v http://localhost:9200 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
     # ---------------------
