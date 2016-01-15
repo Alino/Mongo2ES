@@ -60,7 +60,7 @@ If you are ready to write your own watchers,
 go and create new file ```watchers.js``` in the project root.
 Then you create a watcher by creating new object from Mongo2ES class:
 ```javascript
-if Meteor.isServer {
+if(Meteor.isServer) {
   Meteor.startup(function () {
     new Mongo2ES(options);
   });
@@ -86,7 +86,11 @@ options = {
 You can get inspired from this example file
 [```watchersExample```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample)
 
-
+### stopping a watcher
+```javascript
+watcher = new Mongo2ES(options); // create a watcher and put it into a variable
+watcher.stopWatch() // stops the watcher
+```
 
 ## logging
 there are currently 2 options for logging in Mongo2ES.
