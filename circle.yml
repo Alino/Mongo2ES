@@ -50,7 +50,7 @@ test:
     - curl --retry 10 --retry-delay 5 -v http://localhost:9200 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
     # ---------------------
     # Mongo2ES ------------
-    - cd .docker/Mongo2ES && docker run --name Mongo2ES -d -e ROOT_URL=http://localhost:3001 -e MONGO_URL="mongodb://172.17.42.1:27018/kuknito?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" -e MONGO_OPLOG_URL=mongodb://172.17.42.1:27018/local -e elasticsearchHost=http://172.17.42.1:9200 -p 3001:80 kuknito/mongo2es
+    - docker run --name Mongo2ES -d -e ROOT_URL=http://localhost:3001 -e MONGO_URL="mongodb://172.17.42.1:27018/kuknito?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" -e MONGO_OPLOG_URL=mongodb://172.17.42.1:27018/local -e elasticsearchHost=http://172.17.42.1:9200 -p 3001:80 kuknito/mongo2es
     - sleep 30
     - curl --retry 10 --retry-delay 5 -v http://localhost:3001 ; if [ $? != 0 ] ; then sudo apt-get install traceroute ; HOSTNAME=localhost; ping -c 10 $HOSTNAME > $CIRCLE_ARTIFACTS/network-report.log ; traceroute $HOSTNAME >> $CIRCLE_ARTIFACTS/network-report.log ; fi
     # ---------------------
