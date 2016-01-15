@@ -1,7 +1,7 @@
 [![Circle CI](https://circleci.com/gh/Alino/Mongo2ES/tree/master.svg?style=svg)](https://circleci.com/gh/Alino/Mongo2ES/tree/master)
 # Mongo2ES:
 - Mongo2ES syncs data from MongoDB to ElasticSearch.
-- Also automatically removes documents from ElasticSearch if they are removed in MongoDB
+- Also automatically removes documents from ElasticSearch if they are removed in MongoDB.
 - Mongo2ES is built with MeteorJs.
 
 
