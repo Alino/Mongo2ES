@@ -1,2 +1,2 @@
 .DS_Store
-packages/kuknito-mongo2es-watchers/watchers.coffee
+watchers.coffee

@@ -1,1 +1,0 @@
-Mongo2ES = this.Mongo2ES;
