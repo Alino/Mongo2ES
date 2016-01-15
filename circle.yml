@@ -66,6 +66,7 @@ test:
     # PACKAGE TESTING using velocity-cli
     - velocity test-packages --port 3500 --ci:
         environment:
+          elasticsearchHost: "http://localhost:9200"
           VELOCITY_DEBUG: true
           VELOCITY_CI: true
 
