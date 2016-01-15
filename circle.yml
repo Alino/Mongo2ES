@@ -72,3 +72,10 @@ test:
     - docker kill Mongo2ES && docker logs -f Mongo2ES > $CIRCLE_ARTIFACTS/mongo2es.log
     - docker kill ElasticSearch && docker logs -f ElasticSearch > $CIRCLE_ARTIFACTS/elasticsearch.log
     - docker kill MongoDB && docker logs -f MongoDB > $CIRCLE_ARTIFACTS/mongodb.log
+
+
+deployment:
+  dockerhub:
+    branch: master
+    commands:
+      - curl --data build=true -X POST https://registry.hub.docker.com/u/alino/mongo2es/trigger/1c0523aa-e635-41c0-9e3e-fa465d2d4d83/
