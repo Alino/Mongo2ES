@@ -56,12 +56,10 @@ If you want to sync MongoDB to ElasticSearch, you must define which collections 
 For that, you have to write your watchers.
 
 You can get inspired from this example file
-[```Mongo2ES/packages/kuknito-mongo2es-watchers/watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/packages/kuknito-mongo2es-watchers/watchersExample.coffee)
+[```watchersExample.coffee```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.coffee)
 
 If you are ready to write your own watchers,
-go and create new file ```watchers.coffee```
-in ```Mongo2ES/packages/kuknito-mongo2es-watchers/``` directory.
-(all coffee files in this directory are automatically run when Mongo2ES starts up.)
+go and create new file ```watchers.coffee``` in the project root.
 
 ## logging
 there are currently 2 options for logging in Mongo2ES.
