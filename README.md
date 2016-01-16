@@ -84,7 +84,7 @@ options = {
 
 ### examples of watchers
 You can get inspired from this example file
-[```watchersExample```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample)
+[```watchersExample.md```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.md)
 
 ### stopping a watcher
 ```javascript
