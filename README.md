@@ -61,7 +61,7 @@ go and create new file ```watchers.js``` in the project root.
 Then you create a watcher by creating new object from Mongo2ES class:
 ```javascript
 if(Meteor.isServer) {
-  Meteor.startup(function () {
+  Meteor.startup(function() {
     new Mongo2ES(options);
   });
 }
