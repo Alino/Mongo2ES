@@ -34,6 +34,8 @@ docker run --name Mongo2ES -d \
   kuknito/mongo2es
 ```
 
+*note*: the docker image is also available at docker hub as an automated build. https://hub.docker.com/r/alino/mongo2es/
+
 ### install as a Meteor package
 ```
 meteor add alino:mongo2es
