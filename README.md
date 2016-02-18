@@ -36,6 +36,10 @@ docker run --name Mongo2ES -d \
 
 *note*: the docker image is also available at docker hub as an automated build. https://hub.docker.com/r/alino/mongo2es/
 
+#### Verbose mode
+
+To enable verbose output to container log, either set the environment variable `MONGO2ES_VERBOSE=true` when creating the container or set option `verbose: true` in options when instantiating Mongo2ES.
+
 ### install as a Meteor package
 ```
 meteor add alino:mongo2es
