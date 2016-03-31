@@ -15,11 +15,13 @@ Mongo2ES runs as a Meteor application, so you need to have Meteor installed, fir
 ```shell
 curl https://install.meteor.com/ | sh
 ```
-then clone and run it
+then clone, set env variables and run it
 ```shell
 git clone https://github.com/Alino/Mongo2ES.git
 cd Mongo2ES
-elasticsearchHost="127.0.0.1:9200" meteor --port 3001
+export elasticsearchHost="http://127.0.0.1:9200";
+export MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000"
+meteor --port 3001
 ```
 ### install as docker container:
 ```shell
@@ -101,6 +103,12 @@ there are currently 2 options for logging in Mongo2ES.
 2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
 
 Both logging options are using Meteor package <a href="https://github.com/Alino/logit/" target="_blank">```alino:logit```</a>
+
+
+## Verbose mode
+- to enable verbose output to container log, either set the environment variable `MONGO2ES_VERBOSE=true` when creating the container
+- or set option `verbose: true` in options when instantiating Mongo2ES.
+
 
 ## limitations:
 - only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
