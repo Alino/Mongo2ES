@@ -38,10 +38,6 @@ docker run --name Mongo2ES -d \
 
 *note*: the docker image is also available at docker hub as an automated build. https://hub.docker.com/r/alino/mongo2es/
 
-#### Verbose mode
-
-To enable verbose output to container log, either set the environment variable `MONGO2ES_VERBOSE=true` when creating the container or set option `verbose: true` in options when instantiating Mongo2ES.
-
 ### install as a Meteor package
 ```
 meteor add alino:mongo2es
@@ -107,6 +103,12 @@ there are currently 2 options for logging in Mongo2ES.
 2. **logging to ElasticSearch with logstash** - to enable this feature, you must set *logitHost* and *logitPort* environment variables.
 
 Both logging options are using Meteor package <a href="https://github.com/Alino/logit/" target="_blank">```alino:logit```</a>
+
+
+## Verbose mode
+- to enable verbose output to container log, either set the environment variable `MONGO2ES_VERBOSE=true` when creating the container
+- or set option `verbose: true` in options when instantiating Mongo2ES.
+
 
 ## limitations:
 - only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
