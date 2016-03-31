@@ -36,6 +36,12 @@ docker run --name Mongo2ES -d \
   kuknito/mongo2es
 ```
 
+*note*: the docker image is also available at docker hub as an automated build. https://hub.docker.com/r/alino/mongo2es/
+
+#### Verbose mode
+
+To enable verbose output to container log, either set the environment variable `MONGO2ES_VERBOSE=true` when creating the container or set option `verbose: true` in options when instantiating Mongo2ES.
+
 ### install as a Meteor package
 ```
 meteor add alino:mongo2es
@@ -63,7 +69,7 @@ go and create new file ```watchers.js``` in the project root.
 Then you create a watcher by creating new object from Mongo2ES class:
 ```javascript
 if(Meteor.isServer) {
-  Meteor.startup(function () {
+  Meteor.startup(function() {
     new Mongo2ES(options);
   });
 }
@@ -86,7 +92,7 @@ options = {
 
 ### examples of watchers
 You can get inspired from this example file
-[```watchersExample```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample)
+[```watchersExample.md```](https://github.com/Alino/Mongo2ES/blob/master/watchersExample.md)
 
 ### stopping a watcher
 ```javascript

@@ -1,3 +1,4 @@
+```javascript
 if (Meteor.isServer) {
 
   Meteor.startup(function () {
@@ -44,3 +45,4 @@ if (Meteor.isServer) {
   });
 
 }
+```
