@@ -1,5 +1,6 @@
 [![Circle CI](https://circleci.com/gh/Alino/Mongo2ES/tree/master.svg?style=svg)](https://circleci.com/gh/Alino/Mongo2ES/tree/master)
 # Mongo2ES:
+## v0.6
 - Mongo2ES syncs data from MongoDB to ElasticSearch.
 - Also automatically removes documents from ElasticSearch if they are removed in MongoDB.
 - Mongo2ES is built with MeteorJs.
@@ -81,6 +82,7 @@ options = {
     type: // String - ElasticSearch type
   },
   transform: // Function - modify the document before copying it to ElasticSearch. Takes 1 argument - the document and should return the modified document.
+             // NOTE: if you 'return false' within this function and then the transportation of this document would be totally skipped!
   copyAlreadyExistingData: // Boolean - true if  it should copy all existing data in this collection ( default: false )
 }
 ```
