@@ -114,3 +114,7 @@ Both logging options are using Meteor package <a href="https://github.com/Alino/
 
 ## limitations:
 - only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
+
+## contact
+I can give you real time help for this project or meteor
+[![Contact me on Codementor](https://cdn.codementor.io/badges/contact_me_github.svg)](https://www.codementor.io/alexandersadovsky?utm_source=github&utm_medium=button&utm_term=alexandersadovsky&utm_campaign=github)
