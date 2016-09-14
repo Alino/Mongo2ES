@@ -21,7 +21,8 @@ then clone, set env variables and run it
 git clone https://github.com/Alino/Mongo2ES.git
 cd Mongo2ES
 export elasticsearchHost="http://127.0.0.1:9200";
-export MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000"
+export MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs"
+export MONGO_OPLOG_URL="mongodb://127.0.0.1:27017/local"
 meteor --port 3001
 ```
 ### install as docker container:
@@ -30,7 +31,7 @@ git clone https://github.com/Alino/Mongo2ES.git && cd Mongo2ES
 docker build -t kuknito/mongo2es .
 docker run --name Mongo2ES -d \
   -e ROOT_URL=http://localhost:3001 \
-  -e MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs&readPreference=primaryPreferred&w=majority&connectTimeoutMS=60000&socketTimeoutMS=60000" \
+  -e MONGO_URL="mongodb://127.0.0.1:27017/dbname?replicaSet=rs" \
   -e MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local \
   -e elasticsearchHost="127.0.0.1:9200" \
   -p 3001:80 \
@@ -39,7 +40,7 @@ docker run --name Mongo2ES -d \
 
 *note*: the docker image is also available at docker hub as an automated build. https://hub.docker.com/r/alino/mongo2es/
 
-### install as a Meteor package
+### install as a Meteor package (not recommended)
 ```
 meteor add alino:mongo2es
 ```
@@ -116,5 +117,6 @@ Both logging options are using Meteor package <a href="https://github.com/Alino/
 - only one mongo database can be synced to ES, because we are tailing single MONGO_OPLOG_URL
 
 ## contact
-I can give you real time help for this project or meteor
+If you need help, please open an issue here on github.
+I can also give you real time help for this project or meteor
 [![Contact me on Codementor](https://cdn.codementor.io/badges/contact_me_github.svg)](https://www.codementor.io/alexandersadovsky?utm_source=github&utm_medium=button&utm_term=alexandersadovsky&utm_campaign=github)
