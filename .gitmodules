@@ -1,3 +1,0 @@
-[submodule "packages/alino-mongo2es"]
-	path = packages/alino-mongo2es
-	url = https://github.com/Alino/alino-mongo2es
